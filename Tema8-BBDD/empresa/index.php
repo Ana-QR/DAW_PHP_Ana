@@ -58,9 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login']) && $_SESSION[
         if ($stmt->rowCount() == 1) {
             $user = $stmt->fetch();
             if (password_verify($password, $user['password_hash'])) {
-                $_SESSION['errorInicioSesion'] = 0;
-                $_SESSION['rol'] = $user['rol'];
-                $_SESSION['nombre'] = $user['email'];
+                $_SESSION['email'] = $email;
                 header("Location: bienvenida.php");
                 exit();
             } else {
@@ -75,6 +73,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login']) && $_SESSION[
     }
 }
 
+// Si se superan los 3 intentos, bloqueamos por 5 segundos
+if ($_SESSION['errorInicioSesion'] >= 3) {
+    $tiempoRestante = time() - $_SESSION['ultimoIntento'];
+    if ($tiempoRestante < 5) {
+        // Bloquear al usuario durante 5 segundos
+        echo "<script>
+            setTimeout(function() {
+                window.location.reload();
+            }, 5000);
+        </script>";
+    } else {
+        // Si ya han pasado los 5 segundos, reseteamos los errores
+        $_SESSION['errorInicioSesion'] = 0;
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -83,7 +97,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login']) && $_SESSION[
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro e Inicio de Sesión</title>
-    <link rel="stylesheet" href="css/style.css"> <!-- Incluyendo el CSS -->
 </head>
 <body>
 
