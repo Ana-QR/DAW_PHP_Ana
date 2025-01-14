@@ -14,6 +14,24 @@ if(isset($_POST['modificar'])){
     $stmt->bindParam(':email', $email);
     $stmt->execute();
     $user = $stmt->fetch();
+
+    //modifica al usuario
+    $emailNuevo = $_POST['email'];
+    $nombreNuevo = $_POST['nombre'];
+    $sql = "UPDATE usuarios SET email = :emailNuevo, Nombre = :nombreNuevo WHERE id= :id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':emailNuevo', $emailNuevo);
+    $stmt->bindParam(':nombreNuevo', $nombreNuevo);
+    $stmt->bindParam(':id', $user['id']);
+    $stmt->execute();
+    $_SESSION['email'] = $emailNuevo;
+    $_SESSION['nombre'] = $nombreNuevo;
+    echo "Usuario modificado con exito";
+    echo "<script>
+            setTimeout(function(){
+                window.location.href='bienvenida.php'}, 2000);
+            </script>";
+    exit();
 }
 ?>
 
@@ -32,6 +50,7 @@ if(isset($_POST['modificar'])){
         <input type="email" name="email" value="<?php echo $_SESSION['email']?>"><br>
         <label for="nombre">Nombre:</label>
         <input type="nombre" name="nombre" value="<?php echo $_SESSION['nombre']?>"><br>
+        <input type="submit" name="modificar" value="Modificar">
 
     </form>
 </body>
