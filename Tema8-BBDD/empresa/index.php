@@ -59,9 +59,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login']) && $_SESSION[
             $user = $stmt->fetch();
             if (password_verify($password, $user['password_hash'])) {
                 $_SESSION['email'] = $email;
+                $_SESSION['rol'] = $user['rol'];
+                $_SESSION['nombre'] = $user['nombre'];
+                $_SESSION['errorInicioSesion'] = 0;
                 header("Location: bienvenida.php");
                 exit();
             } else {
+                echo "La contraseña no es correcta";
                 $_SESSION['errorInicioSesion']++;
                 $_SESSION['ultimoIntento'] = time(); // Registro la hora del último intento fallido
             }
