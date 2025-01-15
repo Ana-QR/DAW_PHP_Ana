@@ -54,18 +54,30 @@ require_once 'requires/conexion.php';
             </div>
             <div class="login">
                 <h3>Identificate</h3>
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Contraseña">
-                <button>Entrar</button>
+                <?php
+                if(isset($_SESSION['errorPasswordLogin'])){
+                    echo $_SESSION['errorPasswordLogin'];
+                }
+                ?>
+                <form method="POST" accion="login.php">
+                    <input type="email" name="emailLogin" placeholder="Email">
+                    <input type="password" name="passwordLogin" placeholder="Contraseña">
+                    <button type="submit" name="botonLogin">Entrar</button>
+                </form>
             </div>
             <div class="register">
                 <h3>Registrate</h3>
+                <?php
+                if(isset($_SESSION['success_message'])){
+                    echo $_SESSION['success_message'];
+                }
+                ?>
                 <form method="POST" action="registro.php">
                     <input type="text" name="nombreRegistro" placeholder="Nombre">
                     <input type="text" name="apellidoRegistro" placeholder="Apellidos">
                     <input type="email" name="emailRegistro" placeholder="Email">
                     <input type="password" name="passwordRegistro" placeholder="Contraseña">
-                    <button type="submit" name="registro">Registrar</button>
+                    <button type="submit" name="botonRegistro">Registrar</button>
                 </form>
             </div>
         </aside>
