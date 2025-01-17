@@ -1,4 +1,5 @@
 <?php
+echo "Esta es la rama de Armando Vaquero";
 // 1. Iniciamos sesión
 session_start();
 
