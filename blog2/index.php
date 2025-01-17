@@ -5,6 +5,8 @@ session_start();
 require_once 'requires/conexion.php';
 
 $_SESSION['loginExito'] = $_SESSION['loginExito'] ?? false;
+
+echo "Esta es la rama de juan";
 ?>
 
 <!DOCTYPE html>
