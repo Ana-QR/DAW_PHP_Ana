@@ -9,7 +9,7 @@ $_SESSION['loginExito'] = $_SESSION['loginExito'] ?? false;
 
 
 
-echo "Esta es la rama de Sara";
+
 ?>
 
 <!DOCTYPE html>
@@ -99,3 +99,4 @@ echo "Esta es la rama de Sara";
 </body>
 
 </html>
+<?php echo "Esta es la rama de Sara"; ?>
